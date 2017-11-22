@@ -1,7 +1,14 @@
+// Variable Declaration
+const deck = document.getElementById("deck-id");
+const moves = document.getElementsByClassName("moves");
+
+let MATCH_LIST = []; // global matchList
+
 /*
  * Create a list that holds all of your cards
  */
-
+const cardList = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"]; // unique set
+cardList.push(...cardList); // Now the card list has two set of unique card
 
 /*
  * Display the cards on the page
@@ -25,10 +32,23 @@ function shuffle(array) {
     return array;
 }
 
-// Variable Declaration
-const deck = document.getElementById("deck-id");
-const moves = document.getElementsByClassName("moves");
-let MATCH_LIST = []; // global matchList
+// Shuffle the list of cards
+shuffle(cardList);
+
+// Loop throught each card and create its HTML
+console.log(deck);
+// console.log(deck.children);
+
+// want to improve somehow using dot operator...
+for (let i=0; i<deck.children.length; i++){
+    console.log(deck.children[i].children);
+    deck.children[i].children[0].classList.add(cardList[i]);
+}
+
+// for (let foo of deck.children) {
+//     console.log(foo.children[0].className);
+//     foo.children[0].classList.add("fa-paper-plane-o");
+// }
 
 // Set up the event listener for a card
 deck.addEventListener("click", function(e) {
@@ -42,8 +62,11 @@ deck.addEventListener("click", function(e) {
  * @param {object} target - the card clicked
  */
 function displayCard(target) {
-    target.classList.add("open", "show");
-    addCard(MATCH_LIST, target);
+    // prevent displaying card while there are two cards already
+    if (MATCH_LIST.length < 2) {
+        target.classList.add("open", "show");
+        addCard(MATCH_LIST, target);
+    }    
 }
 
 /**
@@ -69,11 +92,13 @@ function isMatch(aCard, bCard) {
 
     if (a == b) {
         lockCards();
+        MATCH_LIST = [];
     } else if (a != b) {
-        removeCards();
+        setTimeout(function(){
+            removeCards();
+            MATCH_LIST = [];
+        }, 1000);
     }
-
-    MATCH_LIST = [];
 
     increaseMoveCounter();
 
@@ -84,7 +109,7 @@ function isMatch(aCard, bCard) {
  * @description If the cards do match, lock the cards in the open position
  */
 function lockCards() {
-    for (card of MATCH_LIST) {
+    for (let card of MATCH_LIST) {
         card.classList.remove("open", "show");
         card.classList.add("match");
     }
@@ -95,7 +120,7 @@ function lockCards() {
  */
 function removeCards() {
     // TODO: add animation
-    for (card of MATCH_LIST) {
+    for (let card of MATCH_LIST) {
         card.classList.remove("open", "show");
     }
 }
