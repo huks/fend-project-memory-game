@@ -29,7 +29,7 @@
             </div>            
         </section>
 
-        <section id="timer" class="timer-panel">
+        <section id="timer-id" class="timer-panel">
             <span>00:00:00</span>
         </section>
 
@@ -83,6 +83,21 @@
                 <i class="fa"></i>
             </li>
         </ul>
+    </div>
+
+    <!-- https://www.w3schools.com/howto/howto_css_modals.asp -->
+    <!-- Trigger/Open The Modal -->
+    <button id="btn-foo">Open Modal</button>
+
+    <!-- The Modal -->
+    <div id="modal-id" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p>Congratulations! You Won!</p>
+            <p id="game-result">Took 00:00:00 with 17 Moves and 1 Stars.</p>
+            <p>Woooooo!</p>
+            <button id="btn-play-again" class="play-again">Play again!</button>
+        </div>
     </div>
 
     <script src="js/app.js"></script>

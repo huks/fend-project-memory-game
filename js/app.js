@@ -137,7 +137,7 @@ function displayStar(count) {
         removeStar(1);
     } else if (count==6) {
         removeStar(0);
-    } 
+    }
 }
 
 /**
@@ -169,7 +169,7 @@ restart.addEventListener("click", function() {
 });
 
 // Stopwatch function from http://jsfiddle.net/oukjfavu/
-const timer = document.getElementById("timer");
+const timer = document.getElementById("timer-id");
 let seconds = 0, minutes = 0, hours = 0;
 
 function add() {
@@ -187,4 +187,46 @@ function add() {
         + ":" + (seconds > 9 ? seconds : "0" + seconds);
 }
 
-var foo = setInterval(add, 1000); // Any difference when using without assigning foo...?
+var clock = setInterval(add, 1000); // Any difference when using without assigning foo...?
+
+// https://www.w3schools.com/howto/howto_css_modals.asp
+// Get the modal
+var modal = document.getElementById("modal-id");
+// Get the button that opens the modal
+var btnFoo = document.getElementById("btn-foo");
+// Get the button that closes the modal
+var btnPlayAgain = document.getElementById("btn-play-again");
+// When the user clicks on the button, open the modal
+btnFoo.onclick = function() {
+    displayGameResult();  
+}
+// When the use clicks on the btn-play-again, close the modal
+btnPlayAgain.onclick = function() {
+    //modal.style.display = "none";
+    window.location.reload();
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+/**
+ * A modal appears to congratulate the player and ask if they want to play agian.
+ * It should also tell the user how much time it took to win the game, and what the star rating was.
+ */
+const gameResult = document.getElementById("game-result"); 
+function displayGameResult() {
+    // stop the timer
+    clearTimeout(clock);
+    // game result is...
+    let tNum = timer.innerHTML;
+    let mNum = moves.innerHTML;
+    let sNum = document.getElementsByClassName("fa-star").length;
+    // gameResult.innerHTML = "Took " + tNum + " with " + mNum + " Moves and " + sNum + " Stars.";
+    // Practicing Template literals
+    gameResult.innerHTML = `Took ${tNum} with ${mNum} Moves and ${sNum} Stars.`;
+    // open modal
+    modal.style.display = "block"; 
+}
