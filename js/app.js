@@ -54,7 +54,12 @@ deck.addEventListener("click", function(e) {
  * @description Display the card's symbol
  * @param {object} target - the card clicked
  */
+let boolStarted = false;
 function displayCard(target) {
+    if (!boolStarted) {
+        var clock = setInterval(add, 1000); // timer
+        boolStarted = true;
+    }    
     // prevent displaying card while there are two cards already
     if (MATCH_LIST.length < 2) {
         target.classList.add("open", "show");
@@ -186,8 +191,6 @@ function add() {
         + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00")
         + ":" + (seconds > 9 ? seconds : "0" + seconds);
 }
-
-var clock = setInterval(add, 1000); // Any difference when using without assigning foo...?
 
 // https://www.w3schools.com/howto/howto_css_modals.asp
 // Get the modal
