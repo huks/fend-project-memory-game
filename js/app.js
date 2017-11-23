@@ -1,8 +1,11 @@
 // Variable Declaration
 const deck = document.getElementById("deck-id");
-const moves = document.getElementsByClassName("moves");
+const moves = document.getElementsByClassName("moves")[0];
+const star = document.getElementsByClassName("stars")[0];
+const restart = document.getElementsByClassName("restart")[0];
 
 let MATCH_LIST = []; // global matchList
+let MATCH_COUNT = 0;
 
 /*
  * Create a list that holds all of your cards
@@ -35,20 +38,10 @@ function shuffle(array) {
 // Shuffle the list of cards
 shuffle(cardList);
 
-// Loop throught each card and create its HTML
-console.log(deck);
-// console.log(deck.children);
-
 // want to improve somehow using dot operator...
 for (let i=0; i<deck.children.length; i++){
-    console.log(deck.children[i].children);
     deck.children[i].children[0].classList.add(cardList[i]);
 }
-
-// for (let foo of deck.children) {
-//     console.log(foo.children[0].className);
-//     foo.children[0].classList.add("fa-paper-plane-o");
-// }
 
 // Set up the event listener for a card
 deck.addEventListener("click", function(e) {
@@ -90,17 +83,17 @@ function isMatch(aCard, bCard) {
     let a = aCard.children[0].className;
     let b = bCard.children[0].className;
 
-    if (a == b) {
-        lockCards();
-        MATCH_LIST = [];
-    } else if (a != b) {
-        setTimeout(function(){
+    setTimeout(function(){
+        if (a==b) {
+            lockCards();
+            MATCH_LIST = [];
+        } else if (a!=b) {
             removeCards();
             MATCH_LIST = [];
-        }, 1000);
-    }
+        }
+    }, 500);
 
-    increaseMoveCounter();
+    increaseMoveCount();
 
     // if all cards have matched, display a message with the final score
 }
@@ -113,6 +106,7 @@ function lockCards() {
         card.classList.remove("open", "show");
         card.classList.add("match");
     }
+    increaseMatchCount();
 }
 
 /**
@@ -128,6 +122,69 @@ function removeCards() {
 /**
  * @description Increment the move counter and display it on the page
  */
-function increaseMoveCounter() {
-    moves[0].innerHTML++;
+function increaseMoveCount() {
+    return displayStar(++moves.innerHTML);
 }
+
+/**
+ * @description The game displays a star rating (from 1-3). Note that fa-star-o is empty star.
+ * @param {number} count
+ */
+function displayStar(count) {
+    if (count==2) {
+        removeStar(2);
+    } else if (count==4) {
+        removeStar(1);
+    } else if (count==6) {
+        removeStar(0);
+    } 
+}
+
+/**
+ * @description Remove star by give index, for displayStar() function
+ * @param {number} index 
+ */
+function removeStar(index) {
+    star.children[index].children[0].classList.remove("fa-star");
+    star.children[index].children[0].classList.add("fa-star-o");
+}
+
+/**
+ * @description Incresement the match counter
+ */
+function increaseMatchCount() {
+    ++MATCH_COUNT;
+    if(MATCH_COUNT==8) {
+        // Congratulations Popup
+        alert("weee");
+        window.location.reload();
+    }
+}
+
+/**
+ * A restart button allows the player to reset the game board, the timer, and the star rating.
+ */
+restart.addEventListener("click", function() {
+    window.location.reload();
+});
+
+// Stopwatch function from http://jsfiddle.net/oukjfavu/
+const timer = document.getElementById("timer");
+let seconds = 0, minutes = 0, hours = 0;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    timer.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00")
+        + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00")
+        + ":" + (seconds > 9 ? seconds : "0" + seconds);
+}
+
+var foo = setInterval(add, 1000); // Any difference when using without assigning foo...?
