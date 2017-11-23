@@ -156,8 +156,7 @@ function increaseMatchCount() {
     ++MATCH_COUNT;
     if(MATCH_COUNT==8) {
         // Congratulations Popup
-        alert("weee");
-        window.location.reload();
+        displayGameResult();
     }
 }
 
@@ -192,24 +191,12 @@ var clock = setInterval(add, 1000); // Any difference when using without assigni
 // https://www.w3schools.com/howto/howto_css_modals.asp
 // Get the modal
 var modal = document.getElementById("modal-id");
-// Get the button that opens the modal
-var btnFoo = document.getElementById("btn-foo");
 // Get the button that closes the modal
 var btnPlayAgain = document.getElementById("btn-play-again");
-// When the user clicks on the button, open the modal
-btnFoo.onclick = function() {
-    displayGameResult();  
-}
 // When the use clicks on the btn-play-again, close the modal
 btnPlayAgain.onclick = function() {
     //modal.style.display = "none";
     window.location.reload();
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
 }
 
 /**
