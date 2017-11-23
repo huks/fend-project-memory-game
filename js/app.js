@@ -131,11 +131,12 @@ function increaseMoveCount() {
  * @param {number} count
  */
 function displayStar(count) {
-    if (count==2) {
+    const difficulty = [16, 19, 25];
+    if (count==difficulty[0]) {
         removeStar(2);
-    } else if (count==4) {
+    } else if (count==difficulty[1]) {
         removeStar(1);
-    } else if (count==6) {
+    } else if (count==difficulty[2]) {
         removeStar(0);
     }
 }
