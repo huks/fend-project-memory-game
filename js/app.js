@@ -91,16 +91,22 @@ function isMatch(aCard, bCard) {
     setTimeout(function(){
         if (a==b) {
             lockCards();
-            MATCH_LIST = [];
         } else if (a!=b) {
             removeCards();
-            MATCH_LIST = [];
         }
-    }, 500);
+        emptyMatchList();
+    }, 2000);
 
     increaseMoveCount();
 
     // if all cards have matched, display a message with the final score
+}
+
+/**
+ * @description empty the MATCH_LIST
+ */
+function emptyMatchList() {
+    MATCH_LIST = [];
 }
 
 /**
@@ -118,7 +124,6 @@ function lockCards() {
  * @description If the cards do not match, remove the cards from the list and hide the card's symbol
  */
 function removeCards() {
-    // TODO: add animation
     for (let card of MATCH_LIST) {
         card.classList.remove("open", "show");
     }
