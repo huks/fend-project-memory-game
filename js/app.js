@@ -55,9 +55,10 @@ deck.addEventListener("click", function(e) {
  * @param {object} target - the card clicked
  */
 let boolStarted = false;
+var clock;
 function displayCard(target) {
     if (!boolStarted) {
-        var clock = setInterval(add, 1000); // timer
+        clock = setInterval(add, 1000); // timer
         boolStarted = true;
     }    
     // prevent displaying card while there are two cards already
@@ -95,7 +96,7 @@ function isMatch(aCard, bCard) {
             removeCards();
         }
         emptyMatchList();
-    }, 2000);
+    }, 500);
 
     increaseMoveCount();
 
@@ -144,11 +145,13 @@ function displayStar(count) {
     const difficulty = [16, 19, 25];
     if (count==difficulty[0]) {
         removeStar(2);
-    } else if (count==difficulty[1]) {
-        removeStar(1);
-    } else if (count==difficulty[2]) {
-        removeStar(0);
     }
+    else if (count==difficulty[1]) {
+        removeStar(1);
+    }
+    // else if (count==difficulty[2]) {
+    //     removeStar(0);
+    // }
 }
 
 /**
